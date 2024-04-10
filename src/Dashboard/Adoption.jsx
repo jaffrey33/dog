@@ -21,24 +21,18 @@ export default function Adoption() {
             setLoader(false)
             return;
         }
-
         const imgRef = ref(FirebaseStorage, `Adoption/${formState.animal}/${uuidv4()}`);
         try {
             // Upload the image bytes to Firebase Storage
             const snapshot1 = await uploadBytes(imgRef, img);
-
-
             // Get the download URL for the uploaded image
             const downloadURL = await getDownloadURL(snapshot1.ref);
-
-
             // Now store image data in Firestore
             await addDoc(collection(FirestoreDatabase, 'adopt'), {
                 ...formState,
                 image: downloadURL,
 
             });
-
             // You can also display a success message if needed
              setLoader(false)
             message.success('Pet uploaded successfully');
@@ -71,7 +65,7 @@ export default function Adoption() {
                                     </label>
                                     <div className="mt-2">
                                         <input
-                                            value={formState.name}
+                                            value={formState.name || ""}
                                             onChange={handleChange}
                                             placeholder="Name"
                                             type="text"
@@ -86,7 +80,7 @@ export default function Adoption() {
                                     </label>
                                     <div className="mt-2">
                                         <input
-                                            value={formState.animal}
+                                            value={formState.animal || ""}
                                             onChange={handleChange}
                                             placeholder="(e.g. Dog,Cat)"
                                             type="text"
@@ -97,11 +91,26 @@ export default function Adoption() {
                                 </div>
                                 <div>
                                     <label className="text-base font-medium text-gray-900">
+                                        Birthday
+                                    </label>
+                                    <div className="mt-2">
+                                        <input
+                                            value={formState.date || ""}
+                                            onChange={handleChange}
+                                            placeholder="Bday"
+                                            type="date"
+                                            className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                            name="date"
+                                        />
+                                    </div>
+                                </div>
+                                <div>
+                                    <label className="text-base font-medium text-gray-900">
                                         What is the Age?
                                     </label>
                                     <div className="mt-2">
                                         <input
-                                            value={formState.age}
+                                            value={formState.age || ""}
                                             onChange={handleChange}
                                             placeholder="Age"
                                             type="number"
@@ -116,7 +125,7 @@ export default function Adoption() {
                                     </label>
                                     <div className="mt-2">
                                         <input
-                                            value={formState.breed}
+                                            value={formState.breed || ""}
                                             onChange={handleChange}
                                             placeholder="Breed"
                                             type="text"
@@ -131,7 +140,7 @@ export default function Adoption() {
                                     </label>
                                     <div className="mt-2">
                                         <input
-                                            value={formState.color}
+                                            value={formState.color || ""}
                                             onChange={handleChange}
                                             placeholder="Color"
                                             type="text"
@@ -154,6 +163,20 @@ export default function Adoption() {
                                             </div>
 
 
+                                        </div>
+                                    </div>
+                                    <div >
+                                        <p className="text-base font-medium text-gray-900">Vacinated?</p>
+                                        <div className="flex gap-4 mb-2">
+                                            <div className="flex gap-2 flex-row-reverse font-semibold">
+                                                <label htmlFor="yes">Yes </label>
+                                                <input type="radio" name="vacinated" id="yes" value="yes" checked={formState.vacinated === "yes"} onChange={handleChange} />
+                                            </div>
+
+                                            <div className="flex gap-2 flex-row-reverse font-semibold">
+                                                <label htmlFor="male">No </label>
+                                                <input type="radio" name="vacinated" id="no" value="no" checked={formState.vacinated === "no"} onChange={handleChange} />
+                                            </div>
                                         </div>
                                     </div>
 

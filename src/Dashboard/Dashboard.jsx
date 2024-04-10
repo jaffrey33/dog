@@ -14,9 +14,7 @@ export default function Dashboard() {
                 <TabPane tab="Adoption" key="2" >
                     <Adoption />
                 </TabPane>
-                <TabPane tab="Tab 3" key="3">
-                    Content of Tab Pane 3
-                </TabPane>
+                
             </Tabs>
         </main>
     )

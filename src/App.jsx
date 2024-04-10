@@ -10,6 +10,8 @@ import Verify from "./Auth/Verify"
 import Protected from "./Auth/Protected"
 import Dashboard from "./Dashboard/Dashboard"
 import { ViewProvider } from "./Context/ViewContext"
+import AdoptDetail from "./components/AdoptDetail"
+import Cart from "./Pages/Cart"
 
 
 function App() {
@@ -25,11 +27,13 @@ function App() {
               <Route index element={<Home />} />
               <Route path="shop" element={<Protected><Shop /></Protected>} />
               <Route path="adopt" element={<Protected><Adopt /></Protected>} />
-              <Route path="shopdetail" element={<ShopDetails />} />
+              <Route path="shopdetail" element={<Protected><ShopDetails /></Protected>} />
+              <Route path="adoptdetail" element={<Protected><AdoptDetail /></Protected>} />
               <Route path="login" element={<Login />} />
               <Route path="register" element={<Register />} />
               <Route path="verify" element={<Verify />} />
             </Route>
+            <Route path="cart" element={<Protected><Cart /></Protected>} />
           </Routes>
         </BrowserRouter>
       </ViewProvider>

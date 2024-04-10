@@ -22,11 +22,11 @@ export default function Nav() {
         <>
             <div className='fixed w-full z-50'>
                 <nav className="flex justify-around items-center w-full bg-[#E7D9FE]">
-                    {user ? 
-                    <div className="flex gap-2 items-center">
-                        <img src={user.photoURL} onClick={handleLogout} className='border border-black w-10 aspect-square rounded-full' />
-                        <p>{user.displayName}</p>
-                    </div> : <Link to="/login" className='hover:text-[#FF543E] font-smibold'><p>Login/Register</p></Link>
+                    {user ?
+                        <div className="flex gap-2 items-center">
+                            <img src={user.photoURL} onClick={handleLogout} className='border border-black w-10 aspect-square rounded-full' />
+                            <p>{user.displayName}</p>
+                        </div> : <Link to="/login" className='hover:text-[#FF543E] font-smibold'><p>Login/Register</p></Link>
                     }
                     <div>
                         <ul className="flex gap gap-4 items-center ">
@@ -73,7 +73,10 @@ export default function Nav() {
                             </li>
                         </ul>
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF543E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg>
+                    <Link to="/cart">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF543E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" />
+                            <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg>
+                    </Link>
                 </nav>
             </div>
             <Outlet />

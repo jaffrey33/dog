@@ -3,6 +3,7 @@ import dog from '../images/dogbg.png'
 import Card from '../components/Card';
 import { GetAdopt } from '../API/GetItems';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 export default function Adopt() {
     const [list, setList] = useState([])
     const items = [
@@ -22,12 +23,12 @@ export default function Adopt() {
                 </a>
             ),
         },
-  
+
     ]
-    const fetchData = async () =>{
+    const fetchData = async () => {
         try {
             const response = await GetAdopt()
-            if(response.success){
+            if (response.success) {
                 setList(response.data)
             }
         } catch (error) {
@@ -116,9 +117,12 @@ export default function Adopt() {
             </div>
             <div className='w-full p-2'>
                 <div className=' w-full flex gap-12 flex-wrap'>
-                    {list.map((item) =>{
-                        return(
-                            <Card name={item.name} age={item.age}/>
+                    {list.map((item) => {
+                        return (
+                            <Link to="/adoptdetail">
+                                <Card key={item.id} item={item} />
+                            </Link>
+
                         )
                     })}
                 </div>

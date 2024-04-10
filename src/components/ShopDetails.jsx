@@ -1,19 +1,36 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import doggo from "../images/doggo.png"
 import { useView } from "../Context/ViewContext"
+import ProductCard from "./ProductCart"
+import { GetProduct } from "../API/GetItems"
 export default function ShopDetails() {
-    const [add, setAdd] = useState(0)
+    const [add, setAdd] = useState(1)
     const { view } = useView()
-    console.log(view)
     const [change, setChange] = useState(false)
+    const [list, setList] = useState([])
+    const fetchData = async () => {
+        try {
+            const response = await GetProduct()
+            if (response.success) {
+                setList(response.data)
+            }
+        } catch (error) {
+
+        }
+    }
+    // Call the API when component mounts.
+    useEffect(() => { fetchData() }, [])
+
+
     return (
         <div className="min-h-screen bg-hero bg-no-repeat bg-cover bg-center bg-fixed px-16  pt-28 pb-8 flex flex-col gap-8">
             <div className="flex justify-around gap-8  items-start h-full max-md:flex-wrap ">
                 <div className=" flex justify-around gap-8 flex-wrap w-1/2">
-                    <div className="border w-64 h-72 border-black bg-white"></div>
-                    <div className="border w-64 h-72 border-black bg-white"></div>
-                    <div className="border w-64 h-72 border-black bg-white"></div>
-                    <div className="border w-64 h-72 border-black bg-white"></div>
+                    {list.slice(0,3).map((item) => {
+                        return (
+                            <ProductCard key={item.id} item={item} />
+                        )
+                    })}
                 </div>
 
                 {view.map((item) => {
@@ -48,15 +65,15 @@ export default function ShopDetails() {
                                         width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                         class="lucide lucide-star"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
                                 </div>
-                                <p>200 available</p>
+                                <p>{item.stock}</p>
                             </div>
 
                             <div>
                                 <h1 className="font-bold mb-2">Color</h1>
                                 <div className="flex gap-2">
-                                    <div className="w-10 h-10 bg-black rounded-full"></div>
-                                    <div className="w-10 h-10 bg-sky-800 rounded-full"></div>
-                                    <div className="w-10 h-10 bg-gray-500 rounded-full"></div>
+                                    <div style={{backgroundColor:item.color}} className="w-10 h-10  rounded-full"></div>
+                                    <div style={{backgroundColor:item.color2}} className="w-10 h-10  rounded-full"></div>
+                                    
                                 </div>
                             </div>
                             <div>
@@ -87,12 +104,11 @@ export default function ShopDetails() {
 
             <div className="border bg-moon-200 p-8  border-black">
                 <h2 className="text-2xl font-bold mb-2">Description</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque congue fermentum nunc,
-                    in ultrices nibh luctus non. Donec non purus consequat, efficitur mi vitae, tincidunt magna.
-                    Nunc et mi consequat, lobortis enim vel, condimentum diam. Curabitur et libero congue,
-                    consequat justo gravida, imperdiet nisl. Praesent vitae tincidunt mauris, vel mollis tellus.
-                    Vestibulum rhoncus varius odio quis tristique.
-                </p>
+                {view.map((item) => {
+                    return (
+                        <p>{item.description}</p>
+                    )
+                })}
             </div>
             <h1 className="text-2xl font-bold">Customer Reviews (243)</h1>
             <div className="flex justify-between">

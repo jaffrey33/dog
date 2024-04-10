@@ -4,8 +4,9 @@ import { useView } from "../Context/ViewContext"
 export default function ProductCard(props) {
     const {id,name, image, price}= props.item
     const {viewItem} = useView()
+    
     return (
-        <div className="flex flex-col gap-2 items-center" onClick={()=>viewItem(props.item)}>
+        <div className="cursor-pointer flex flex-col gap-2 items-center" onClick={()=>viewItem(props.item)}>
             <div className=" w-60 aspect-square bg-white border border-black p-4">
                 <img src={image} alt="" />
             </div>
